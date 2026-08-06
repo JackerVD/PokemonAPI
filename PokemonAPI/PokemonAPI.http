@@ -1,0 +1,358 @@
+@PokemonAPI_HostAddress = http://localhost:5252
+
+### Health check rápido
+GET {{PokemonAPI_HostAddress}}/api/pokemons
+Accept: application/json
+
+#####################################################
+# 1) POKEMONS BASE - CRUD
+#####################################################
+
+### Listar pokemons base
+GET {{PokemonAPI_HostAddress}}/api/pokemons
+Accept: application/json
+
+###
+
+### Crear pokemon base
+POST {{PokemonAPI_HostAddress}}/api/pokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "PikachuDemo",
+  "saludTotalBase": 110,
+  "ataqueBase": 75,
+  "defensaBase": 60,
+  "ataqueEspecialBase": 70,
+  "defensaEspecialBase": 70,
+  "velocidadBase": 110,
+  "tipos": ["Electrico"]
+}
+
+###
+
+### Obtener pokemon por id (ajusta ID)
+GET {{PokemonAPI_HostAddress}}/api/pokemons/3?includeMovimientos=true&includeMovimientosPosibles=true
+Accept: application/json
+
+###
+
+### Editar pokemon base (ajusta ID)
+PUT {{PokemonAPI_HostAddress}}/api/pokemons/3
+Content-Type: application/json
+
+{
+  "nombre": "PikachuDemoX",
+  "saludTotalBase": 112,
+  "ataqueBase": 76,
+  "defensaBase": 61,
+  "ataqueEspecialBase": 71,
+  "defensaEspecialBase": 71,
+  "velocidadBase": 111,
+  "tipos": ["Electrico"]
+}
+
+###
+
+### Eliminar pokemon base (ajusta ID)
+DELETE {{PokemonAPI_HostAddress}}/api/pokemons/3
+Accept: application/json
+
+#####################################################
+# 2) MOVIMIENTOS - CRUD
+#####################################################
+
+### Listar movimientos
+GET {{PokemonAPI_HostAddress}}/api/movimientos
+Accept: application/json
+
+###
+
+### Crear movimiento (recuerda Categoria: Fisico | Especial | Estado)
+POST {{PokemonAPI_HostAddress}}/api/movimientos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "ImpactruenoDemo",
+  "tipo": "Electrico",
+  "categoria": "Especial",
+  "poder": 40
+}
+
+###
+
+### Obtener movimiento por id (ajusta ID)
+GET {{PokemonAPI_HostAddress}}/api/movimientos/2
+Accept: application/json
+
+###
+
+### Editar movimiento (ajusta ID)
+PUT {{PokemonAPI_HostAddress}}/api/movimientos/2
+Content-Type: application/json
+
+{
+  "nombre": "RayoDemo",
+  "tipo": "Electrico",
+  "categoria": "Especial",
+  "poder": 90
+}
+
+###
+
+### Eliminar movimiento (ajusta ID)
+DELETE {{PokemonAPI_HostAddress}}/api/movimientos/2
+Accept: application/json
+
+#####################################################
+# 3) MOVIMIENTOS DE POKEMON (reales y posibles)
+#####################################################
+
+### Consulta requerida: movimientos de un pokemon
+GET {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos
+Accept: application/json
+
+###
+
+### Consulta requerida: movimientos posibles de un pokemon
+GET {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos-posibles
+Accept: application/json
+
+###
+
+### Reemplazar movimientos reales (PUT completo)
+PUT {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos
+Content-Type: application/json
+
+{
+  "movimientoIds": [10,11,12,13]
+}
+
+###
+
+### Reemplazar movimientos posibles (PUT completo)
+PUT {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos-posibles
+Content-Type: application/json
+
+{
+  "movimientoIds": [10,11,12,13,14]
+}
+
+###
+
+### Extra: parchear movimientos reales (PATCH parcial)
+PATCH {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos
+Content-Type: application/json
+
+{
+  "agregar": [14],
+  "eliminar": [10]
+}
+
+###
+
+### Extra: parchear movimientos posibles (PATCH parcial)
+PATCH {{PokemonAPI_HostAddress}}/api/pokemons/3/movimientos-posibles
+Content-Type: application/json
+
+{
+  "agregar": [15],
+  "eliminar": [11]
+}
+
+#####################################################
+# 4) Consulta requerida:
+# Pokemons que comparten un mismo movimiento
+#####################################################
+
+### Pokemons que tienen el movimiento real (ajusta ID movimiento)
+GET {{PokemonAPI_HostAddress}}/api/movimientos/13/pokemons
+Accept: application/json
+
+###
+
+### Extra: pokemons que pueden aprenderlo (ajusta ID movimiento)
+GET {{PokemonAPI_HostAddress}}/api/movimientos/2/pokemons-posibles
+Accept: application/json
+
+#####################################################
+# 5) MIS POKEMONS - CRUD
+#####################################################
+
+### Listar MisPokemons
+GET {{PokemonAPI_HostAddress}}/api/mispokemons
+Accept: application/json
+
+###
+
+### Crear MiPokemon #1 (ajusta pokemonId base)
+POST {{PokemonAPI_HostAddress}}/api/mispokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemonId": 4,
+  "nombrePersonalizado": "Sparky",
+  "nivel": 50
+}
+
+###
+
+### Crear MiPokemon #2 (ajusta pokemonId base)
+POST {{PokemonAPI_HostAddress}}/api/mispokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemonId": 6,
+  "nombrePersonalizado": "Tank",
+  "nivel": 50
+}
+
+###
+
+### Obtener MiPokemon por id (ajusta ID)
+GET {{PokemonAPI_HostAddress}}/api/mispokemons/1
+Accept: application/json
+
+###
+
+### Editar MiPokemon parcial (ajusta ID)
+PUT {{PokemonAPI_HostAddress}}/api/mispokemons/1
+Content-Type: application/json
+
+{
+  "nombrePersonalizado": "Sparky",
+  "saludActual": 105
+}
+
+###
+
+### Eliminar MiPokemon (ajusta ID)
+DELETE {{PokemonAPI_HostAddress}}/api/mispokemons/2
+Accept: application/json
+
+#####################################################
+# 6) MisPokemons - movimientos (4 slots)
+#####################################################
+
+### Ver movimientos posibles para ese MiPokemon (ajusta ID)
+GET {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos-posibles
+Accept: application/json
+
+###
+
+### Ver movimientos asignados por slots
+GET {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos
+Accept: application/json
+
+###
+
+### Asignar slot 1 (ajusta movimientoId)
+PUT {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos/1
+Content-Type: application/json
+
+{
+  "movimientoId": 12
+}
+
+###
+
+### Asignar slot 2
+PUT {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos/2
+Content-Type: application/json
+
+{
+  "movimientoId": 13
+}
+
+###
+
+### Asignar slot 3
+PUT {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos/3
+Content-Type: application/json
+
+{
+  "movimientoId": 11
+}
+
+###
+
+### Asignar slot 4
+PUT {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos/4
+Content-Type: application/json
+
+{
+  "movimientoId": 10
+}
+
+###
+
+### Extra: actualizar varios slots en lote (si añadiste PATCH de lote)
+PATCH {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos
+Content-Type: application/json
+
+{
+  "movimientos": [
+    { "slot": 1, "movimientoId": 12 },
+    { "slot": 2, "movimientoId": 13 }
+  ]
+}
+
+###
+
+### Borrar movimiento de un slot
+DELETE {{PokemonAPI_HostAddress}}/api/mispokemons/1/movimientos/4
+Accept: application/json
+
+#####################################################
+# PARTE 3 - COMBATE
+# - Crear combate con 2 adversarios
+# - Ejecutar turnos
+# - Mantener estado
+# - Finalizar al llegar PS a 0
+#####################################################
+
+### Crear combate
+POST {{PokemonAPI_HostAddress}}/api/combates
+Content-Type: application/json
+Accept: application/json
+
+{
+  "miPokemonIds": [1,2],
+  "cantidadEnemigos": 2
+}
+
+# Copia el combateId de la respuesta y úsalo abajo
+
+###
+
+### Obtener estado de combate (ajusta GUID)
+GET {{PokemonAPI_HostAddress}}/api/combates/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+###
+
+### Ejecutar un turno (ajusta GUID)
+POST {{PokemonAPI_HostAddress}}/api/combates/00000000-0000-0000-0000-000000000000/turno
+Accept: application/json
+
+###
+
+### Extra: simular combate completo (ajusta GUID)
+POST {{PokemonAPI_HostAddress}}/api/combates/00000000-0000-0000-0000-000000000000/simular?maxTurnos=100
+Accept: application/json
+
+###
+
+### Extra: historial completo del combate (ajusta GUID)
+GET {{PokemonAPI_HostAddress}}/api/combates/00000000-0000-0000-0000-000000000000/historial
+Accept: application/json
+
+###
+
+### Eliminar combate (ajusta GUID)
+DELETE {{PokemonAPI_HostAddress}}/api/combates/00000000-0000-0000-0000-000000000000
+Accept: application/json
