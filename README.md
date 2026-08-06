@@ -263,7 +263,7 @@ json:
 
 
 Consola de Administrador de Paquetes: dotnet ef database update
-
+Usar el seed.sql dejado en /docs en la bbdd para cargar los casos de prueba
 
 
 \### 3) Ejecutar API
